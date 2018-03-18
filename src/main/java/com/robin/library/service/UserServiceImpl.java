@@ -2,35 +2,40 @@ package com.robin.library.service;
 
 import com.robin.library.domain.User;
 import com.robin.library.repository.UserRepository;
-import com.robin.library.repository.UserRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
-	private UserRepository userRepository = new UserRepositoryImpl();
+	@Autowired
+	private UserRepository userRepository;
+
 
 	@Override
 	public void add(User user) {
-		userRepository.add(user);
+		userRepository.save(user);
 	}
 
 	@Override
-	public User get(Integer id) {
-		return userRepository.get(id);
+	public Optional<User> get(Integer id) {
+		return userRepository.findById(id);
 	}
 
 	@Override
 	public void update(User user) {
-		userRepository.update(user);
+		userRepository.save(user);
 	}
 
 	@Override
-	public User delete(Integer id) {
-		return userRepository.delete(id);
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 
 	@Override
 	public List<User> all() {
-		return userRepository.all();
+		return userRepository.findAll();
 	}
 }

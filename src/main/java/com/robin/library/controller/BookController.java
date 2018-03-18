@@ -2,19 +2,21 @@ package com.robin.library.controller;
 
 import com.robin.library.domain.Book;
 import com.robin.library.service.BookService;
-import com.robin.library.service.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("book")
 public class BookController {
 
-	private BookService bookService = new BookServiceImpl();
+	@Autowired
+	private BookService bookService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	void all(@RequestBody Book book) {
+	void add(@RequestBody Book book) {
 		bookService.add(book);
 	}
 
@@ -28,8 +30,16 @@ public class BookController {
 		return bookService.all();
 	}
 
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	Book get(@PathVariable Integer id) {
+		return bookService.get(id).get();
+	}
+
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	Book delete(@PathVariable Integer id) {
-		return bookService.delete(id);
+	void delete(@PathVariable Integer id) {
+		Optional<Book> book = bookService.get(id);
+		if (book.isPresent()) {
+			bookService.delete(book.get());
+		}
 	}
 }

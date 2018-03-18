@@ -6,6 +6,7 @@ import com.robin.library.service.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("user")
@@ -28,7 +29,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	User delete(@PathVariable Integer id) {
-		return userService.delete(id);
+	void delete(@PathVariable Integer id) {
+		Optional<User> user = userService.get(id);
+		if (user.isPresent()) {
+			userService.delete(user.get());
+		}
 	}
 }
