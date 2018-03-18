@@ -32,5 +32,6 @@ public class LibraryApplication implements CommandLineRunner {
 		bookService.add(new Book(2,"Wiedźmin", "Andrzej Sapkowski"));
 		Book book = bookService.get(1);
 		System.out.println(book.getName() + " " + book.getAuthor());
+		bookService.delete(1);
 	}
 }

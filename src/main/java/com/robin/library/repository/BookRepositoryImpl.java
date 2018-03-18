@@ -58,7 +58,24 @@ public class BookRepositoryImpl implements BookRepository {
 
 	@Override
 	public Book delete(Integer id) {
-		return null;
+		Book book = null;
+		Session session = factory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			book = session.get(Book.class, id);
+			if(book != null) {
+				session.delete(book);
+			}
+			transaction.commit();
+			session.close();
+		} catch (HibernateException e) {
+			if (transaction != null) transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return book;
 	}
 
 	@Override
