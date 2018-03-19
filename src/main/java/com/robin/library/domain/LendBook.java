@@ -6,24 +6,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class User {
-
+public class LendBook {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String firstName;
-	private String lastName;
 
-	public User(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn()
+	private User user;
+
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn()
+	private Book book;
+
+	private LocalDate lendingStart;
+
+	private LocalDate lendingEnd;
 }

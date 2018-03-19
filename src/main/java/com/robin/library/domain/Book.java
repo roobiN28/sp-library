@@ -1,16 +1,15 @@
 package com.robin.library.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Book {
@@ -20,4 +19,13 @@ public class Book {
 	private Integer id;
 	private String name;
 	private String author;
+
+	@OneToMany(mappedBy = "user")
+	private List<LendBook> lendingBook = new ArrayList<>();
+
+	public Book(Integer id, String name, String author) {
+		this.id = id;
+		this.name = name;
+		this.author = author;
+	}
 }

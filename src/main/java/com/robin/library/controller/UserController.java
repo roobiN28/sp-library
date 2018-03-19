@@ -3,6 +3,7 @@ package com.robin.library.controller;
 import com.robin.library.domain.User;
 import com.robin.library.service.UserService;
 import com.robin.library.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("user")
 public class UserController {
-	private UserService userService = new UserServiceImpl();
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	void all(@RequestBody User user) {
