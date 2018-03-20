@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 public class Book {
 
@@ -19,15 +18,21 @@ public class Book {
 	private Integer id;
 	private String name;
 	private String author;
+
+	@Enumerated(EnumType.STRING)
 	private BookStatus status;
 
 	@OneToMany(mappedBy = "user")
 	private List<LendBook> lendingBook = new ArrayList<>();
 
 	public Book(Integer id, String name, String author) {
+		this.status = BookStatus.IN_LIBRARY;
 		this.id = id;
 		this.name = name;
 		this.author = author;
+	}
+
+	public Book() {
 		this.status = BookStatus.IN_LIBRARY;
 	}
 }

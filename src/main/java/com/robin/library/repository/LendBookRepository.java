@@ -12,6 +12,4 @@ import java.util.List;
 @Repository
 public interface LendBookRepository extends JpaRepository<LendBook, Integer> {
 	List<LendBook> findByBookIdAndAndUserIdAndLendingEndIsNull(Integer bookId, Integer userId);
-
-	Integer countByStatus(BookStatus status);
 }

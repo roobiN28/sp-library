@@ -4,6 +4,7 @@ import com.robin.library.domain.Book;
 import com.robin.library.domain.BookStatus;
 import com.robin.library.domain.LendBook;
 import com.robin.library.domain.User;
+import com.robin.library.repository.BookRepository;
 import com.robin.library.repository.LendBookRepository;
 import com.robin.library.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,17 @@ public class LibraryServiceImpl implements LibraryService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private BookRepository bookRepository;
+
 	@Override
 	public void lendBook(User user, Book book) {
 		LendBook lendBook = new LendBook();
 		lendBook.setUser(user);
 		lendBook.setBook(book);
 		lendBook.setLendingStart(LocalDate.now());
+		book.setStatus(BookStatus.LENDED);
+		bookRepository.save(book);
 		lendBookRepository.save(lendBook);
 	}
 
@@ -38,17 +44,18 @@ public class LibraryServiceImpl implements LibraryService {
 			user.increaseDebtBy(PENALTY_COST);
 			userRepository.save(user);
 		}
-
+		book.setStatus(BookStatus.IN_LIBRARY);
+		bookRepository.save(book);
 		lendBookRepository.save(lendedBook);
 	}
 
 	@Override
 	public Integer lendedBooksCount() {
-		return lendBookRepository.countByStatus(BookStatus.LENDED);
+		return bookRepository.countByStatus(BookStatus.LENDED);
 	}
 
 	@Override
 	public Integer booksInLibraryCount() {
-		return lendBookRepository.countByStatus(BookStatus.IN_LIBRARY);
+		return bookRepository.countByStatus(BookStatus.IN_LIBRARY);
 	}
 }
