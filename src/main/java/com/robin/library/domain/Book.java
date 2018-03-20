@@ -19,6 +19,7 @@ public class Book {
 	private Integer id;
 	private String name;
 	private String author;
+	private BookStatus status;
 
 	@OneToMany(mappedBy = "user")
 	private List<LendBook> lendingBook = new ArrayList<>();
@@ -27,5 +28,6 @@ public class Book {
 		this.id = id;
 		this.name = name;
 		this.author = author;
+		this.status = BookStatus.IN_LIBRARY;
 	}
 }

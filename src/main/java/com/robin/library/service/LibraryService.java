@@ -6,6 +6,6 @@ import com.robin.library.domain.User;
 public interface LibraryService {
 	void lendBook(User user, Book book);
 	void giveBackBook(User user, Book book);
-	Integer lendedBookCount();
+	Integer lendedBooksCount();
 	Integer booksInLibraryCount();
 }

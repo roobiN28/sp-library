@@ -21,9 +21,13 @@ public class User {
 	private Integer id;
 	private String firstName;
 	private String lastName;
+	private Integer debt;
 
 	public User(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+	public void increaseDebtBy(Integer gain) {
+		debt += gain;
 	}
 }

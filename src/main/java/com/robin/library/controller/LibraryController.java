@@ -40,7 +40,7 @@ public class LibraryController {
 
 	@RequestMapping(value = "lended", method = RequestMethod.GET)
 	Integer lendedBookCount() {
-		return libraryService.lendedBookCount();
+		return libraryService.lendedBooksCount();
 	}
 
 	@RequestMapping(value = "books", method = RequestMethod.GET)
