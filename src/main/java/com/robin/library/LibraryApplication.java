@@ -11,10 +11,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @SpringBootApplication
-public class LibraryApplication implements CommandLineRunner {
+public class LibraryApplication {
 	@Autowired
 	private BookService bookService;
 
@@ -28,9 +29,9 @@ public class LibraryApplication implements CommandLineRunner {
 		SpringApplication.run(LibraryApplication.class, args);
 	}
 
-
-	@Override
-	public void run(String... strings) {
+	@PostConstruct
+	public void init(){
+		// init some sample data to database
 		bookService.add(new Book(1, "Harry Potter", "J.R.R. Rowling"));
 		Book witcher = new Book(2, "Wiedźmin", "Andrzej Sapkowski");
 		User user = new User("Ala", "Kowalska");
